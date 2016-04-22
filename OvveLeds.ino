@@ -15,7 +15,7 @@
 #define TICK_LENGTH 10
 
 //mode - referes to the current animation mode
-int mode = MODE_STATIC_WINERED;
+int mode = MODE_COLOR_CIRCLE;
 //state - refers to the state of the current animation. 0 refers to start of animation.
 int state = 0;
 
