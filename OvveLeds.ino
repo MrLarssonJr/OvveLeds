@@ -13,7 +13,7 @@
 
 //Animation constants
 //TICK_LENGTH refer to a time in ms
-#define TICK_LENGTH 10
+#define TICK_LENGTH 100
 
 //mode - referes to the current animation mode
 int mode = MODE_COLOR_CIRCLE;
