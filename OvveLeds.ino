@@ -1,4 +1,4 @@
-#include <Adafruit_NeoPixel.h>
+ck the code#include <Adafruit_NeoPixel.h>
 
 //IO config
 #define STRIP1_PIN 0
@@ -18,6 +18,8 @@
 int mode = MODE_COLOR_CIRCLE;
 //state - refers to the state of the current animation. 0 refers to start of animation.
 int state = 0;
+//toggled - refers to if the mode has been toggled during this press of the switch.
+bool toggled = false;
 
 //Strips
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(15, STRIP1_PIN);
@@ -39,10 +41,15 @@ void setup() {
 
 void loop() {
   unsigned long startTime = millis();
-  
+
   if(digitalRead(SWITCH_PIN) == SWITCH_PRESSED) {
-    toggleMode();
+    if(!toggled) {
+      toggleMode();
+    }
+  } else {
+    toggled = false;
   }
+  
 
   switch(mode) {
     case MODE_COLOR_CIRCLE:
@@ -86,6 +93,7 @@ void tickStaticWineredAnimation() {
 }
 
 void toggleMode() {
+  toggled = true;
   //Reset the state so the next animation can start from the begining.
   state = 0;
   //Switch mode
