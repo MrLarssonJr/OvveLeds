@@ -1,10 +1,11 @@
-ck the code#include <Adafruit_NeoPixel.h>
+#include <Adafruit_NeoPixel.h>
 
 //IO config
 #define STRIP1_PIN 0
 #define STRIP2_PIN 1
 #define SWITCH_PIN 2
 #define SWITCH_PRESSED LOW
+#define INPUT_MODE INPUT_PULLUP
 
 //Different animation modes
 #define MODE_COLOR_CIRCLE 0
@@ -36,7 +37,7 @@ void setup() {
   strip2.show();
 
   //Setup the SWITCH_PIN as an INPUT
-  pinMode(SWITCH_PIN, INPUT);
+  pinMode(SWITCH_PIN, INPUT_MODE);
 }
 
 void loop() {
