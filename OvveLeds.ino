@@ -27,7 +27,7 @@ Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(15, STRIP1_PIN);
 Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(15, STRIP2_PIN);
 
 //Frequently used colors
-uint32_t winered = strip1.Color(153, 0, 18);
+uint32_t winered = strip1.Color(153, 5, 5);
 
 void setup() {
   //Initialise the strips
