@@ -40,6 +40,14 @@ void setup() {
   pinMode(SWITCH_PIN, INPUT_MODE);
 }
 
+/**
+ * Main loop.
+ * 
+ * Checks if the button was pressed and then toggles the mode.
+ * Allows one effect calculates it's logic and push color to the strips.
+ * 
+ * Tries to keep each loop's length to TICK_LENGTH
+ */
 void loop() {
   unsigned long startTime = millis();
 
@@ -64,6 +72,9 @@ void loop() {
   delay(TICK_LENGTH - (millis() - startTime));
 }
 
+/**
+ * Animation tick logic for the color circle/rainbow effect.
+ */
 void tickColorCircleAnimation() {
   for(int i = 0; i < strip1.numPixels(); i++) {
     int n = state + i;
@@ -81,6 +92,9 @@ void tickColorCircleAnimation() {
   strip2.show();
 }
 
+/**
+ * Animation tick logic for the static wine red animation.
+ */
 void tickStaticWineredAnimation() {
   for(int n = 0; n < strip1.numPixels(); n++) {
     strip1.setPixelColor(n, winered);
@@ -93,6 +107,12 @@ void tickStaticWineredAnimation() {
   strip2.show();
 }
 
+/**
+ * Method to toggle the active mode properly.
+ * 
+ * Resets the state so that the next animation can start from the begining.
+ * Then switch the current mode.
+ */
 void toggleMode() {
   toggled = true;
   //Reset the state so the next animation can start from the begining.
@@ -111,6 +131,12 @@ void toggleMode() {
   }
 }
 
+/**
+ * Helper method for tickColorCircleAnimation.
+ * 
+ * Calculates the R value of the pixel for the given n.
+ * The given roughly responds to led position mixed with state info.
+ */
 byte R(int n) {
   n = n % 6*255;
   if(n <= 1*255 || 5*255 < 255) {
@@ -127,6 +153,12 @@ byte R(int n) {
   }
 }
 
+/**
+ * Helper method for tickColorCircleAnimation.
+ * 
+ * Calculates the G value of the pixel for the given n.
+ * The given roughly responds to led position mixed with state info.
+ */
 byte G(int n) {
   n = n % 6*255;
   if(n <= 1*255) {
@@ -143,6 +175,12 @@ byte G(int n) {
   }
 }
 
+/**
+ * Helper method for tickColorCircleAnimation.
+ * 
+ * Calculates the B value of the pixel for the given n.
+ * The given roughly responds to led position mixed with state info.
+ */
 byte B(int n) {
   n = n % 6*255;
   if(n <= 2*255) {
