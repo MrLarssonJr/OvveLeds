@@ -9,7 +9,8 @@
 
 //Different animation modes
 #define MODE_COLOR_CIRCLE 0
-#define MODE_STATIC_WINERED 666 
+#define MODE_STATIC_WINERED 666
+#define MODE_KIT 1
 
 //Animation constants
 //TICK_LENGTH refer to a time in ms
@@ -67,6 +68,9 @@ void loop() {
     case MODE_STATIC_WINERED:
       tickStaticWineredAnimation();
       break;
+    case MODE_KIT:
+      tickKIT();
+      break;
   }
   
   delay(TICK_LENGTH - (millis() - startTime));
@@ -108,6 +112,40 @@ void tickStaticWineredAnimation() {
 }
 
 /**
+ * Animation tick logic for the KIT animation.
+ */
+void tickKIT() {
+  int pixels = max(strip1.numPixels(), strip2.numPixels());
+  int internalState = pixels - abs(state - pixels);
+  
+  for(int n = 0; n < strip1.numPixels(); n++) {
+    if(internalState - 1 <= n && n <= internalState + 1) {
+      strip1.setPixelColor(n, 255, 0, 0);
+    } else if(internalState - 5 <= n && n <= internalState + 5) {
+      strip1.setPixelColor(n, 127, 0, 0);
+    } else {
+      strip1.setPixelColor(n, 0, 0, 0);
+    }
+  }
+
+  for(int n = 0; n < strip2.numPixels(); n++) {
+    if(internalState - 1 <= n && n <= internalState + 1) {
+      strip2.setPixelColor(n, 255, 0, 0);
+    } else if(internalState - 5 <= n && n <= internalStatetate + 5) {
+      strip2.setPixelColor(n, 127, 0, 0);
+    } else {
+      strip2.setPixelColor(n, 0, 0, 0);
+    }
+  }
+
+  state++;
+  state = state % (2 * pixels);
+
+  strip1.show();
+  strip2.show();
+}
+
+/**
  * Method to toggle the active mode properly.
  * 
  * Resets the state so that the next animation can start from the begining.
@@ -123,6 +161,9 @@ void toggleMode() {
       mode = MODE_STATIC_WINERED;
       break;
     case MODE_STATIC_WINERED:
+      mode = MODE_KIT;
+      break;
+    case MODE_KIT:
       mode = MODE_COLOR_CIRCLE;
       break;
     default:
@@ -196,4 +237,3 @@ byte B(int n) {
     return 255 - (n % 255);
   }
 }
-
